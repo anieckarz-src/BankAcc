@@ -1,17 +1,17 @@
 public class BankAccount {
-    private  String accountNumber;
+    private String accountNumber;
     private int balance;
     private String customerName;
     private String email;
     private String phoneNumber;
 
 
-    public  BankAccount(){
+    public BankAccount() {
+        this("Null",0,"NONAME","NONAME@email.com","MissingNumber");
         System.out.println("Empty constructor called");
     }
 
-    public BankAccount(String accountNumber, int balance, String customerName, String email, String phoneNumber){
-        
+    public BankAccount(String accountNumber, int balance, String customerName, String email, String phoneNumber) {
         this.balance = balance;
         this.accountNumber = accountNumber;
         this.customerName = customerName;
@@ -20,6 +20,11 @@ public class BankAccount {
 
         System.out.println("Constructor with parameters called");
     }
+
+    public BankAccount(String customerName, String email, String phoneNumber) {
+        this("Null", 0, customerName, email, phoneNumber);
+    }
+
     public String getAccountNumber() {
         return accountNumber;
     }
@@ -61,23 +66,18 @@ public class BankAccount {
     }
 
 
-
-
-
-    public int depositFunds(int balance){
-        System.out.println("deposit: " + balance + ". Balance now: " + (this.balance+=balance));
-         return this.balance += balance;
+    public int depositFunds(int balance) {
+        System.out.println("deposit: " + balance + ". Balance now: " + (this.balance += balance));
+        return this.balance += balance;
 
     }
 
-    public  int withdrawFunds(int balance){
-        if(this.balance>=balance){
-            System.out.println("withdraw: " + balance + ". Balance now: " + (this.balance-balance));
+    public int withdrawFunds(int balance) {
+        if (this.balance >= balance) {
+            System.out.println("withdraw: " + balance + ". Balance now: " + (this.balance - balance));
             return this.balance -= balance;
-        }
-
-        else{
-            System.out.println("Can't withdraw: " + balance + ": withdraw "+this.balance+". Balance now: 0");
+        } else {
+            System.out.println("Can't withdraw: " + balance + ": withdraw " + this.balance + ". Balance now: 0");
             this.balance = 0;
             return balance;
         }
