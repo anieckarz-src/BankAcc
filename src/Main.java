@@ -1,24 +1,79 @@
+import java.util.Scanner;
+
 public class Main {
 
+
     public static void main(String[] args) {
-        BankAccount adriansAccount = new BankAccount("231321312", 4000, "Adrian", "dsadas@gmail.com", "312312123");
-        BankAccount barteksAccount = new BankAccount();
-        BankAccount mareksAccount = new BankAccount("Marek", "marek@gmail.com", "55533333111");
+        Scanner scanner = new Scanner(System.in);
+        LoginSection loginSection = new LoginSection();
+        BankAccount account = new BankAccount();
 
-        //  System.out.println("balance: " + adriansAccount.getBalance());
-        //   adriansAccount.withdrawFunds(1000);
-        // adriansAccount.depositFunds(1000000);
+        boolean createdAccount = false;
+        boolean exitProject = false;
+        System.out.println("Welcome to my Project");
 
-        System.out.println("\n" + barteksAccount.getAccountNumber());
-        System.out.println(barteksAccount.getBalance());
-        System.out.println(barteksAccount.getEmail());
-        System.out.println(barteksAccount.getCustomerName());
-        System.out.println(barteksAccount.getPhoneNumber());
+        while (!exitProject) {
 
-        System.out.println("\n" + barteksAccount.getAccountNumber());
-        System.out.println(mareksAccount.getBalance());
-        System.out.println(mareksAccount.getEmail());
-        System.out.println(mareksAccount.getCustomerName());
-        System.out.println(barteksAccount.getPhoneNumber());
+            start();
+
+            switch (scanner.nextInt()) {
+                case 1 -> {
+                    if (createdAccount) {
+                        System.out.print("\ntype your pin: ");
+                        if (loginSection.correctPin(scanner.next(), account.getCustomerPin())) {
+                            boolean exit = false;
+                            while (!exit) {
+
+                                switch (loginSection.sayHello(account.getCustomerName(), account.getBalance(), account.getAccountNumber())) {
+                                    case 1 -> {
+                                        System.out.print("to withdraw: ");
+                                        account.withdrawFunds(scanner.nextInt());
+                                    }
+                                    case 2 -> {
+                                        System.out.print("to deposit: ");
+                                        account.depositFunds(scanner.nextInt());
+                                    }
+                                    default -> exit = true;
+                                }
+                            }
+
+
+                        } else {
+                            System.out.println("Invalid Pin!");
+                        }
+                    } else
+                        System.out.println("\nyou don't have bank account \n");
+                }
+                case 2 -> {
+
+                    System.out.print("your name:");
+                    account.setCustomerName(scanner.next());
+
+                    System.out.print("your pin:");
+                    account.setCustomerPin(scanner.next());
+
+                    account.setAccountNumber(AccountNumberGenerator.generateAccountNumber());
+                    createdAccount = true;
+                    System.out.println("\n Account created");
+                }
+                default -> {
+                    System.out.println("\nGoodbye!!");
+                    exitProject = true;
+                }
+
+
+            }
+
+        }
+
+    }
+
+
+    public static void start() {
+        System.out.println("\n1. Login");
+        System.out.println("2. Create new account");
+        System.out.println("3. Exit");
+        System.out.print("Choice: ");
+
     }
 }
